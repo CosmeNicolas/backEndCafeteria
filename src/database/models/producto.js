@@ -14,12 +14,18 @@ const productoSchema = new Schema({
     type: Number,
     required: true,
     min: 50,
-    max: 10000,
+    max: 10000
+  },
+  imagen: {
+    type: String,
+    required: true,
     validate: {
-      validator: (valor) =>
-        /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png|jpeg)/.test(valor),
-      message: (dato) => `${dato.value} no es una URL de imagen valida`,
-    },
+      validator: (valor)=> {
+        const pattern = /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|jpeg|gif|png)/
+        return pattern.test(valor)
+      },
+      message: dato => `${dato.value} no es una URL de imágen válida.`
+    }
   },
   categoria: {
     type: String,
