@@ -51,3 +51,23 @@ export const obtenerProducto = async(req, res)=>{
         res.status(400).json({mensaje: "no se encontro el producto solicitado"})
     }
 }
+
+export const editarProducto = async(req, res)=>{
+    try {
+        //verificar si el producto existe  con el id 
+        const productoBuscado = await Producto.findById(req.paras.id)
+        //responder si no es correcto 
+        if(!productoBuscado){
+            return res.status(404).json({mensaje: 'No se encontro el producot buscado'})
+        }
+        //si el producto existe y su datos son correctos , solicitamos actualizar 
+        await Producto.findByIdAndUpdate(req.params.id, req.body )
+        //responder al usuario 
+        res.status(200).json({mensaje: 'El producto fue editado exitosamente'})
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({mensaje: 'ocurrio un error no se pudo editar el producto'})
+    }
+}
+
+// todo lo del 500 es error interno 
